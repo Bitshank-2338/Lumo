@@ -146,6 +146,8 @@ lumo start
 
 Open `http://localhost:3782`. Configure your model and embedding providers in **Settings** before indexing documents. Search, speech, image, and video providers are optional.
 
+Provider auth (`openai-codex` OAuth login; `github-copilot` validates an existing Copilot auth session) is available through the CLI. Container users should follow the [temporary local Codex OAuth bridge](CONTAINERIZATION.md#temporary-local-codex-oauth-bridge) when the callback must be forwarded safely.
+
 Never commit a real `.env` file, API key, uploaded document, local database, or generated user data. See [.env.example](.env.example) for safe examples.
 
 ## Run the public demo locally
