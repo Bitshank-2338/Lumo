@@ -41,7 +41,7 @@ dependencies = [
     "anthropic>=0.30.0",
     "dashscope>=1.14.0",
     "perplexityai>=0.1.0",
-    "oauth-cli-kit>=0.1.1",
+    "oauth-cli-kit>=0.1.6",
     "llama-index>=0.14.12",
     "llama-index-retrievers-bm25>=0.7.1,<0.8.0",
     # FAISS vector store: vectorized ANN retrieval that replaces SimpleVectorStore's
@@ -83,7 +83,7 @@ cli = [
     "anthropic>=0.30.0",
     "dashscope>=1.14.0",
     "perplexityai>=0.1.0",
-    "oauth-cli-kit>=0.1.1",
+    "oauth-cli-kit>=0.1.6",
     # RAG (LlamaIndex)
     "llama-index>=0.14.12",
     "llama-index-retrievers-bm25>=0.7.1,<0.8.0",
