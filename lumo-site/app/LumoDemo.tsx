@@ -35,7 +35,13 @@ const modes = {
 
 type Mode = keyof typeof modes;
 
-export function LumoDemo() {
+type LumoDemoProps = {
+  authUser: { displayName: string } | null;
+  signInHref: string;
+  signOutHref: string;
+};
+
+export function LumoDemo({ authUser, signInHref, signOutHref }: LumoDemoProps) {
   const [mode, setMode] = useState<Mode>("Learn");
   const [goal, setGoal] = useState("Understand retrieval-augmented generation and explain it in my product video");
   const [running, setRunning] = useState(false);
@@ -67,9 +73,24 @@ export function LumoDemo() {
           <a href="#hub">Lumo Hub</a>
           <a href="#docs">Docs</a>
         </nav>
-        <a className="nav-cta" href="https://github.com/Bitshank-2338/Lumo" target="_blank" rel="noreferrer">
-          View source <span>↗</span>
-        </a>
+        <div className="nav-actions">
+          {authUser ? (
+            <>
+              <a className="auth-account" href="/member" title={authUser.displayName}>
+                <span>{authUser.displayName.slice(0, 1).toUpperCase()}</span>
+                <strong>{authUser.displayName}</strong>
+              </a>
+              <a className="signout-link" href={signOutHref}>Sign out</a>
+            </>
+          ) : (
+            <a className="auth-button" href={signInHref}>
+              <span className="openai-mark">✦</span> Sign in with ChatGPT
+            </a>
+          )}
+          <a className="nav-cta" href="https://github.com/Bitshank-2338/Lumo" target="_blank" rel="noreferrer">
+            Source <span>↗</span>
+          </a>
+        </div>
       </header>
 
       <section className="hero" id="top">
@@ -81,7 +102,11 @@ export function LumoDemo() {
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#demo">Try the live workflow <span>→</span></a>
-            <a className="text-button" href="#product">See what Lumo connects</a>
+            {authUser ? (
+              <a className="text-button" href="/member">Open my Lumo space</a>
+            ) : (
+              <a className="text-button" href={signInHref}>Unlock your Lumo space</a>
+            )}
           </div>
           <div className="proof-row">
             <div><strong>7</strong><span>first-party skills</span></div>

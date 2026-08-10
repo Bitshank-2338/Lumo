@@ -55,6 +55,8 @@ Lumo combines a Python/FastAPI agent runtime with a Next.js interface. The backe
 
 The safe public hackathon demo is a self-contained Sites-compatible build under `lumo-site/`. It uses sample data so evaluators can test the product workflow without accessing a developer's local knowledge bases or credentials.
 
+The demo supports optional **Sign in with ChatGPT** authentication. The landing page remains public, while `/member` is a protected identity-aware Lumo space. Authentication is handled by the hosting platform, so the repository does not contain app-owned OAuth secrets.
+
 ## Run locally
 
 Prerequisites: Python 3.10+, Node.js 20+, and at least one configured language model.

@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
-  return worker.fetch(new Request("http://localhost/", { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
+  return worker.fetch(new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
 }
 
 test("server-renders the Lumo public demo", async () => {
@@ -16,5 +16,12 @@ test("server-renders the Lumo public demo", async () => {
   assert.match(html, /Learn deeply/);
   assert.match(html, /Lumo Hub/);
   assert.match(html, /Interactive Product Demo/i);
+  assert.match(html, /Sign in with ChatGPT/);
   assert.doesNotMatch(html, /codex-preview/);
+});
+
+test("protects the member space with ChatGPT sign-in", async () => {
+  const response = await render("/member");
+  assert.ok([302, 307, 308].includes(response.status));
+  assert.match(response.headers.get("location") ?? "", /^\/signin-with-chatgpt\?return_to=%2Fmember$/);
 });
