@@ -12,7 +12,6 @@ from pathlib import Path
 
 import httpx
 
-
 API_URL = "https://eduhub.deeptutor.info/api/v1/skills"
 WEB_ORIGIN = "https://eduhub.deeptutor.info"
 OUTPUT = Path(__file__).resolve().parents[1] / "web" / "data" / "eduhub-catalog.json"

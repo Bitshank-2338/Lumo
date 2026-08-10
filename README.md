@@ -72,6 +72,8 @@ Open `http://localhost:3782`.
 
 Before indexing documents, configure an embedding model under **Settings → Embedding**. Search, speech, image, and video providers are optional and can be enabled independently.
 
+Provider auth (`openai-codex` OAuth login; `github-copilot` validates an existing Copilot auth session) is available through the CLI. Container users can follow the [temporary local Codex OAuth bridge](CONTAINERIZATION.md#temporary-local-codex-oauth-bridge) when the callback must be forwarded safely.
+
 ## Public routes
 
 Public demo: [lumo-ai-learning-hub.shanky2338.chatgpt.site](https://lumo-ai-learning-hub.shanky2338.chatgpt.site)
