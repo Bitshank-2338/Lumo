@@ -3,6 +3,7 @@
   <h1>Lumo</h1>
   <p><strong>Learn deeply. Move with direction.</strong></p>
   <p>An agent-native learning workspace that connects tutoring, research, planning, memory, creation, and specialized AI agents.</p>
+  <p><a href="https://lumo-ai-learning-hub.shanky2338.chatgpt.site">Live Demo</a> · <a href="https://github.com/Bitshank-2338/Lumo/blob/main/HACKATHON_SUBMISSION.md">Submission Guide</a></p>
 </div>
 
 ## The problem
@@ -52,6 +53,8 @@ A learner can upload course material and an opportunity description, evaluate fi
 
 Lumo combines a Python/FastAPI agent runtime with a Next.js interface. The backend manages chat, knowledge retrieval, memory, books, research pipelines, skills, agents, and model providers. The frontend provides the learning workspace and public product site. Internal `deeptutor` package names are retained for upstream compatibility.
 
+The safe public hackathon demo is a self-contained Sites-compatible build under `lumo-site/`. It uses sample data so evaluators can test the product workflow without accessing a developer's local knowledge bases or credentials.
+
 ## Run locally
 
 Prerequisites: Python 3.10+, Node.js 20+, and at least one configured language model.
@@ -70,6 +73,8 @@ Open `http://localhost:3782`.
 Before indexing documents, configure an embedding model under **Settings → Embedding**. Search, speech, image, and video providers are optional and can be enabled independently.
 
 ## Public routes
+
+Public demo: [lumo-ai-learning-hub.shanky2338.chatgpt.site](https://lumo-ai-learning-hub.shanky2338.chatgpt.site)
 
 - `/` — Lumo product website
 - `/docs` — product documentation

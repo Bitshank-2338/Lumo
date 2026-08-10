@@ -176,5 +176,7 @@ Aim for a three-to-four-minute recording.
 **Name:** Lumo  
 **Tagline:** Learn deeply. Move with direction.  
 **Category:** AI education / agentic productivity  
-**Stage:** Functional local product with public website, learning workspace, first-party skills, documentation, and deployment-ready source  
+**Stage:** Functional local product with public website, learning workspace, first-party skills, documentation, and deployed evaluator demo  
+**Live demo:** https://lumo-ai-learning-hub.shanky2338.chatgpt.site  
+**Source:** https://github.com/Bitshank-2338/Lumo  
 **Foundation:** Independent custom build based on the open-source DeepTutor project
