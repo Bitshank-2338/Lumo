@@ -55,7 +55,7 @@ Lumo combines a Python/FastAPI agent runtime with a Next.js interface. The backe
 
 The safe public hackathon demo is a self-contained Sites-compatible build under `lumo-site/`. It uses sample data so evaluators can test the product workflow without accessing a developer's local knowledge bases or credentials.
 
-The demo supports optional **Sign in with ChatGPT** authentication. The landing page remains public, while `/member` is a protected identity-aware Lumo space. Authentication is handled by the hosting platform, so the repository does not contain app-owned OAuth secrets.
+The demo supports optional **Sign in with ChatGPT** authentication. The landing page remains public, while `/member` is a protected identity-aware Lumo space. Each authenticated ChatGPT user ID can build one persistent demo workflow containing a structured lesson, concept map, five recall questions, and a seven-day plan. The workflow is stored in Cloudflare D1, and the database primary key enforces the one-workflow limit server-side. Authentication is handled by the hosting platform, so the repository does not contain app-owned OAuth secrets or store visitor email addresses with workflows.
 
 ## Run locally
 

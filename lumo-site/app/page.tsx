@@ -16,10 +16,16 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const user = await getChatGPTUser();
+  const workflow = user
+    ? await import("../db/workflows").then(({ getUserWorkflow }) =>
+        getUserWorkflow(user.userId),
+      )
+    : null;
 
   return (
     <LumoDemo
       authUser={user ? { displayName: user.displayName } : null}
+      initialWorkflow={workflow}
       signInHref={chatGPTSignInPath("/member")}
       signOutHref={chatGPTSignOutPath("/")}
     />

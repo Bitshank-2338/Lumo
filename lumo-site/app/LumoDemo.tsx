@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 
+import type { SavedDemoWorkflow } from "../lib/workflows";
+
 const skills = [
   { icon: "◎", name: "Source Research", copy: "Trace claims across your materials and build a cited explanation.", output: "Research brief" },
   { icon: "◇", name: "Concept Visualizer", copy: "Turn difficult ideas into diagrams, mental models, and visual walkthroughs.", output: "Visual lesson" },
@@ -37,28 +39,65 @@ type Mode = keyof typeof modes;
 
 type LumoDemoProps = {
   authUser: { displayName: string } | null;
+  initialWorkflow: SavedDemoWorkflow | null;
   signInHref: string;
   signOutHref: string;
 };
 
-export function LumoDemo({ authUser, signInHref, signOutHref }: LumoDemoProps) {
-  const [mode, setMode] = useState<Mode>("Learn");
+export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }: LumoDemoProps) {
+  const [mode, setMode] = useState<Mode>(initialWorkflow?.mode ?? "Learn");
   const [goal, setGoal] = useState("Understand retrieval-augmented generation and explain it in my product video");
   const [running, setRunning] = useState(false);
-  const [complete, setComplete] = useState(false);
+  const [complete, setComplete] = useState(Boolean(initialWorkflow));
+  const [savedWorkflow, setSavedWorkflow] = useState<SavedDemoWorkflow | null>(initialWorkflow);
+  const [workflowNotice, setWorkflowNotice] = useState(initialWorkflow ? "Your one demo workflow is already saved." : "");
   const [openSkill, setOpenSkill] = useState(0);
   const selected = modes[mode];
 
   const goalLabel = useMemo(() => goal.trim() || "Untitled learning goal", [goal]);
 
-  function runDemo() {
+  async function runDemo() {
+    if (!authUser) {
+      window.location.assign(signInHref);
+      return;
+    }
+    if (savedWorkflow) {
+      window.location.assign("/member");
+      return;
+    }
+
     setRunning(true);
     setComplete(false);
-    window.setTimeout(() => {
-      setRunning(false);
+    setWorkflowNotice("");
+    try {
+      const response = await fetch("/api/workflow", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ mode, goal }),
+      });
+      const payload = (await response.json()) as {
+        workflow?: SavedDemoWorkflow;
+        alreadyExists?: boolean;
+        error?: string;
+      };
+      if (!payload.workflow) throw new Error(payload.error || "The workflow could not be saved.");
+
+      setSavedWorkflow(payload.workflow);
+      setMode(payload.workflow.mode);
+      setGoal(payload.workflow.goal);
       setComplete(true);
-    }, 850);
+      setWorkflowNotice(payload.alreadyExists ? "Your existing workflow is ready." : "Workflow saved to your private Lumo space.");
+    } catch (error) {
+      setWorkflowNotice(error instanceof Error ? error.message : "The workflow could not be saved.");
+    } finally {
+      setRunning(false);
+    }
   }
+
+  const displayedTitle = savedWorkflow?.title ?? selected.title;
+  const displayedSteps = savedWorkflow?.steps ?? selected.steps;
+  const displayedOutput = savedWorkflow?.output ?? selected.output;
+  const displayedGoal = savedWorkflow?.goal ?? goalLabel;
 
   return (
     <main>
@@ -176,8 +215,8 @@ export function LumoDemo({ authUser, signInHref, signOutHref }: LumoDemoProps) {
         <div className="demo-intro">
           <span className="kicker light">INTERACTIVE PRODUCT DEMO</span>
           <h2>Give Lumo a destination.</h2>
-          <p>Choose a workflow, describe what you need, and preview how Lumo organizes the work. This public demo uses sample data and never touches your files.</p>
-          <div className="privacy-note"><span>⌾</span><div><strong>Safe demo environment</strong><small>No uploads, accounts, or private data required.</small></div></div>
+          <p>Choose a workflow, describe what you need, and save one complete demo workflow to your private Lumo space.</p>
+          <div className="privacy-note"><span>⌾</span><div><strong>One workflow per ChatGPT ID</strong><small>Your saved workflow is private and available across sessions.</small></div></div>
         </div>
         <div className="demo-panel">
           <div className="mode-switch" role="tablist" aria-label="Workflow mode">
@@ -187,12 +226,14 @@ export function LumoDemo({ authUser, signInHref, signOutHref }: LumoDemoProps) {
           </div>
           <label htmlFor="goal">WHAT DO YOU WANT TO ACHIEVE?</label>
           <textarea id="goal" value={goal} onChange={(event) => { setGoal(event.target.value); setComplete(false); }} rows={3} />
-          <button className="run-button" onClick={runDemo} disabled={running}>{running ? "Lumo is mapping the path…" : "Build my workflow"}<span>{running ? "◎" : "→"}</span></button>
+          <button className="run-button" onClick={runDemo} disabled={running}>{running ? "Lumo is saving your path…" : savedWorkflow ? "Open my saved workflow" : authUser ? "Build and save my workflow" : "Sign in to build one workflow"}<span>{running ? "◎" : "→"}</span></button>
           <div className={`demo-result ${complete ? "complete" : ""}`} aria-live="polite">
-            <div className="result-top"><span>{complete ? "✓" : "✦"}</span><div><small>{complete ? selected.eyebrow : "WORKFLOW PREVIEW"}</small><strong>{selected.title}</strong></div></div>
-            <div className="goal-chip">“{goalLabel}”</div>
-            <ol>{selected.steps.map((step, index) => <li key={step}><span>{complete ? "✓" : index + 1}</span>{step}</li>)}</ol>
-            <p className="result-output"><strong>Output</strong>{selected.output}</p>
+            <div className="result-top"><span>{complete ? "✓" : "✦"}</span><div><small>{savedWorkflow ? "SAVED WORKFLOW" : complete ? selected.eyebrow : "WORKFLOW PREVIEW"}</small><strong>{displayedTitle}</strong></div></div>
+            <div className="goal-chip">“{displayedGoal}”</div>
+            <ol>{displayedSteps.map((step, index) => <li key={step}><span>{complete ? "✓" : index + 1}</span>{step}</li>)}</ol>
+            <p className="result-output"><strong>Output</strong>{displayedOutput}</p>
+            {workflowNotice ? <p className="workflow-notice">{workflowNotice}</p> : null}
+            {savedWorkflow ? <a className="saved-workflow-link" href="/member">Open lesson, concept map, questions, and plan →</a> : null}
           </div>
         </div>
       </section>

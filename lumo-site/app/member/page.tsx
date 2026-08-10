@@ -10,7 +10,12 @@ export default function MemberPage() {
 
 async function AuthenticatedMemberSpace() {
   const user = await requireChatGPTUser("/member");
+  const { getUserWorkflow } = await import("../../db/workflows");
+  const workflow = await getUserWorkflow(user.userId);
   const firstName = user.fullName?.split(/\s+/)[0] || user.displayName.split("@")[0];
+  const savedDate = workflow
+    ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(workflow.createdAt))
+    : null;
 
   return (
     <main className="member-shell">
@@ -30,24 +35,102 @@ async function AuthenticatedMemberSpace() {
         <div>
           <span className="kicker light">YOUR PRIVATE LUMO SPACE</span>
           <h1>Welcome, {firstName}.</h1>
-          <p>Your identity has been verified through ChatGPT. This protected space is the foundation for personal learning paths, saved workflows, and private progress.</p>
+          <p>Your one demo workflow lives here, privately tied to your ChatGPT ID so you can return to it.</p>
         </div>
         <div className="verified-card">
           <span className="verified-icon">✓</span>
           <small>AUTHENTICATION STATUS</small>
           <strong>Signed in with ChatGPT</strong>
-          <p>Only you can view this protected route during your authenticated session.</p>
+          <p>Only you can open the workflow saved to this authenticated identity.</p>
         </div>
       </section>
 
       <section className="member-content">
-        <div className="member-heading"><span>START A PATH</span><h2>What will you turn into progress?</h2></div>
-        <div className="member-grid">
-          <Link href="/#demo"><span>01</span><strong>Build a learning workflow</strong><p>Turn a complex goal into a clear sequence of research, explanation, practice, and planning.</p><i>Try demo →</i></Link>
-          <Link href="/#hub"><span>02</span><strong>Choose a Lumo skill</strong><p>Start with a focused playbook for study, research, revision, visualization, or applications.</p><i>Open Hub →</i></Link>
-          <Link href="/#docs"><span>03</span><strong>Explore the full project</strong><p>See how the private local workspace adds knowledge bases, books, memory, and connected agents.</p><i>Read docs →</i></Link>
-        </div>
-        <div className="member-coming"><span>COMING NEXT</span><p>Personal saved workflows and cross-device progress will build on this verified identity layer.</p></div>
+        {workflow ? (
+          <>
+            <div className="member-heading saved-member-heading">
+              <span>SAVED WORKFLOW</span>
+              <div>
+                <h2>{workflow.title}</h2>
+                <p className="saved-member-meta">{workflow.mode} mode · Created {savedDate} · One workflow per ChatGPT ID</p>
+              </div>
+            </div>
+
+            <article className="saved-workflow-overview">
+              <div className="saved-workflow-status">
+                <span>✓</span>
+                <div><small>LEARNING PATH READY</small><strong>{workflow.title}</strong></div>
+              </div>
+              <blockquote>“{workflow.goal}”</blockquote>
+              <ol className="saved-steps">
+                {workflow.steps.map((step, index) => (
+                  <li key={step}><span>{String(index + 1).padStart(2, "0")}</span>{step}</li>
+                ))}
+              </ol>
+              <p className="saved-output"><strong>Output</strong>{workflow.output}</p>
+            </article>
+
+            <div className="artifact-grid">
+              <section className="artifact-card lesson-artifact">
+                <small>01 · STRUCTURED LESSON</small>
+                <h3>{workflow.details.lesson.heading}</h3>
+                <p>{workflow.details.lesson.summary}</p>
+                <ul>{workflow.details.lesson.keyPoints.map((point) => <li key={point}>{point}</li>)}</ul>
+              </section>
+
+              <section className="artifact-card">
+                <small>02 · CONCEPT MAP</small>
+                <h3>How the ideas connect</h3>
+                <div className="concept-chain">
+                  {workflow.details.conceptMap.map((concept, index) => (
+                    <div key={concept}>
+                      <span>{concept}</span>
+                      {index < workflow.details.conceptMap.length - 1 && <i>↓</i>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="artifact-card">
+                <small>03 · RECALL CHECK</small>
+                <h3>Five questions</h3>
+                <ol className="question-list">
+                  {workflow.details.recallQuestions.map((question) => <li key={question}>{question}</li>)}
+                </ol>
+              </section>
+
+              <section className="artifact-card">
+                <small>04 · SEVEN-DAY PLAN</small>
+                <h3>Turn insight into progress</h3>
+                <ol className="plan-list">
+                  {workflow.details.sevenDayPlan.map((item, index) => (
+                    <li key={item}><span>DAY {index + 1}</span>{item}</li>
+                  ))}
+                </ol>
+              </section>
+            </div>
+
+            <div className="member-coming">
+              <span>DEMO WORKFLOW SAVED</span>
+              <p>This is the one workflow available to this ChatGPT ID. It remains here when you return.</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="member-heading">
+              <span>ONE WORKFLOW AVAILABLE</span>
+              <h2>Build your complete demo learning path.</h2>
+            </div>
+            <div className="empty-workflow-card">
+              <span>01</span>
+              <div>
+                <strong>Your workspace is ready</strong>
+                <p>Choose a mode and goal. Lumo will save a lesson, concept map, five recall questions, and a seven-day plan here.</p>
+              </div>
+              <Link href="/#demo">Build my workflow →</Link>
+            </div>
+          </>
+        )}
       </section>
     </main>
   );
