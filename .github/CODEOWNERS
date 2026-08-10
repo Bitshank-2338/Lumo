@@ -1,0 +1,9 @@
+# Default reviewer for repository changes.
+* @Bitshank-2338
+
+# Sensitive and project-governance areas.
+/.github/ @Bitshank-2338
+/SECURITY.md @Bitshank-2338
+/GOVERNANCE.md @Bitshank-2338
+/lumo-site/app/api/ @Bitshank-2338
+/lumo-site/db/ @Bitshank-2338

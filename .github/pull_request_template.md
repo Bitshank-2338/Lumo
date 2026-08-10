@@ -1,39 +1,56 @@
-<!--
-Thank you for contributing to DeepTutor! 🚀
-Please ensure your PR is ready for review and follows our contribution guidelines.
-For more details, see our [CONTRIBUTING.md](https://github.com/HKUDS/DeepTutor/blob/dev/CONTRIBUTING.md).
--->
+## Problem
 
-### Description
-*A clear and concise description of the changes.*
+<!-- What problem does this solve? Describe the user or developer impact. -->
 
-### Related Issues
-- Closes #...
-- Related to #...
+Closes #<!-- issue number, if applicable -->
 
-### Module(s) Affected
-- [ ] `agents`
-- [ ] `api`
-- [ ] `config`
-- [ ] `core`
-- [ ] `knowledge`
-- [ ] `logging`
-- [ ] `services`
-- [ ] `tools`
-- [ ] `utils`
-- [ ] `web` (Frontend)
-- [ ] `docs` (Documentation)
-- [ ] `scripts`
-- [ ] `tests`
-- [ ] Other: `...`
+## Solution
 
-### Checklist
-- [ ] I have read and followed the [contribution guidelines](https://github.com/HKUDS/DeepTutor/blob/dev/CONTRIBUTING.md).
-- [ ] My code follows the project's coding standards.
-- [ ] I have run `pre-commit run --all-files` and fixed any issues.
-- [ ] I have added relevant tests for my changes.
-- [ ] I have updated the documentation (if necessary).
-- [ ] My changes do not introduce any new security vulnerabilities.
+<!-- Summarize the approach and the important tradeoffs. -->
 
-### Additional Notes
-*Add any other context or screenshots about the pull request here.*
+## Product surface
+
+- [ ] Full local application (`deeptutor/`, `deeptutor_cli/`, or `web/`)
+- [ ] Public demo (`lumo-site/`)
+- [ ] Lumo skill
+- [ ] Documentation or contributor experience
+- [ ] Build, dependency, or release tooling
+
+## How to verify
+
+<!-- Give reviewers exact steps. Include the commands you ran and their results. -->
+
+```text
+Commands and results
+```
+
+## Visual evidence
+
+<!-- Required for visible UI changes. Add before/after screenshots or a short recording. Write N/A if not applicable. -->
+
+## Risk and impact
+
+- Security impact: <!-- None, or explain -->
+- Privacy/data impact: <!-- None, or explain collection, storage, retention, and access -->
+- Dependency impact: <!-- None, or list additions/removals and why -->
+- Migration or compatibility impact: <!-- None, or explain -->
+- Deployment impact: <!-- None, or explain configuration/binding changes -->
+
+## Contributor checklist
+
+- [ ] I read and followed `CONTRIBUTING.md` and the Code of Conduct.
+- [ ] The change is focused and does not include unrelated generated files.
+- [ ] I added or updated tests for changed behavior, or explained why tests are not needed.
+- [ ] I updated user and contributor documentation where necessary.
+- [ ] I did not commit secrets, tokens, private data, uploaded files, or local databases.
+- [ ] I preserved required licenses, attribution, and third-party notices.
+- [ ] I checked accessibility for user-interface changes.
+- [ ] I disclosed material AI assistance below and verified the result.
+
+## AI assistance
+
+<!-- State the tool and how you verified its output, or write “None.” -->
+
+## Additional notes
+
+<!-- Anything reviewers should know. -->

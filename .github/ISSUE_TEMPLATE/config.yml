@@ -1,1 +1,11 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Lumo documentation
+    url: https://lumo-ai-learning-hub.shanky2338.chatgpt.site/docs
+    about: Read the public product documentation before opening an issue.
+  - name: Security vulnerability
+    url: https://github.com/Bitshank-2338/Lumo/security/advisories/new
+    about: Report security vulnerabilities privately. Do not create a public issue.
+  - name: Live demo
+    url: https://lumo-ai-learning-hub.shanky2338.chatgpt.site
+    about: Open the public Lumo demo.

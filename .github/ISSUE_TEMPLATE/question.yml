@@ -1,47 +1,52 @@
 name: Question
-description: Ask a general question
+description: Ask for help using or contributing to Lumo
+title: "[Question]: "
 labels: ["question"]
-title: "[Question]:"
-
 body:
   - type: checkboxes
-    id: existingcheck
+    id: checks
     attributes:
-      label: Do you need to ask a question?
-      description: Please help us manage our time by avoiding duplicates and common questions with the steps below.
+      label: Before submitting
       options:
-        - label: I have searched the existing questions and discussions and this question is not already answered.
-        - label: I believe this is a legitimate question, not just a bug or feature request.
-  - type: textarea
-    id: question
-    attributes:
-      label: Your Question
-      description: A clear and concise description of your question.
-      placeholder: What is your question?
+        - label: I read the README and SUPPORT.md.
+          required: true
+        - label: I searched existing issues for an answer.
+          required: true
+        - label: I removed secrets and private data from this question.
+          required: true
   - type: dropdown
-    id: module
+    id: area
     attributes:
-      label: Related Module
-      description: Which module is your question related to?
+      label: Area
       options:
-        - Dashboard
-        - Knowledge Base Management
-        - Smart Solver
-        - Question Generator
-        - Deep Research
-        - Co-Writer
-        - Notebook
-        - Guided Learning
-        - Idea Generation
-        - API/Backend
-        - Frontend/Web
-        - Installation/Setup
-        - General
+        - Full local Lumo application
+        - Public website or authenticated demo
+        - Installation and configuration
+        - Knowledge bases and retrieval
+        - Skills and Lumo Hub
+        - Contributing and development
+        - Other
     validations:
       required: true
   - type: textarea
-    id: context
+    id: goal
     attributes:
-      label: Additional Context
-      description: Provide any additional context or details that might help us understand your question better.
-      placeholder: Add any relevant information here (code snippets, error messages, configuration, etc.)
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried?
+      description: Include commands, documentation followed, and sanitized output.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - Operating system:
+        - Python version:
+        - Node.js version:
+        - Lumo commit or version:

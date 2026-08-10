@@ -1,58 +1,51 @@
-name: Documentation Issue
-description: Report an inaccuracy, broken link, missing topic, or unclear explanation in the docs at deeptutor.info
+name: Documentation issue
+description: Report missing, inaccurate, unclear, or broken Lumo documentation
 title: "[Docs]: "
-labels: ["docs", "triage"]
-
+labels: ["documentation"]
 body:
   - type: checkboxes
-    id: existingcheck
+    id: checks
     attributes:
-      label: Before filing
+      label: Before submitting
       options:
-        - label: I have searched the existing docs issues and this report is not already filed.
-        - label: This is about the docs at https://deeptutor.info — not a product bug.
+        - label: I searched existing issues and did not find this documentation problem.
+          required: true
   - type: input
-    id: page
+    id: location
     attributes:
-      label: Page URL
-      description: Which page does the issue affect?
-      placeholder: https://deeptutor.info/docs/...
+      label: Location
+      description: Link to the page or enter the repository path and heading.
+      placeholder: README.md#run-the-full-application-locally
     validations:
       required: true
   - type: dropdown
     id: kind
     attributes:
-      label: What kind of issue?
+      label: Type of problem
       options:
-        - Inaccurate or out-of-date content
-        - Broken link / 404
-        - Command or example that does not work
-        - Screenshot does not match the current product
-        - Missing topic / coverage gap
-        - Typo / formatting / wording
+        - Inaccurate or outdated information
+        - Missing setup or usage guidance
+        - Command or example does not work
+        - Broken link
+        - Public demo and local app are confused
+        - Accessibility or readability
+        - Typo or formatting
         - Other
     validations:
       required: true
   - type: textarea
     id: problem
     attributes:
-      label: What's wrong?
-      description: Quote the affected text or describe the issue.
-      placeholder: e.g. "Get Started → Setup Tour references `scripts/start_tour.py` which doesn't exist in the repo."
+      label: What is wrong or missing?
     validations:
       required: true
   - type: textarea
-    id: expected
+    id: correction
     attributes:
-      label: What did you expect?
-      description: Optional — what should the docs say or show instead?
-      placeholder: e.g. "The PyPI install path should be the recommended entry, matching the README."
+      label: Suggested correction
+      description: If possible, describe what the documentation should say instead.
   - type: textarea
     id: environment
     attributes:
-      label: Environment (optional)
-      description: Only if relevant to the issue (browser, OS, DeepTutor version).
-      placeholder: |
-        - Browser:
-        - DeepTutor version (if checked locally):
-        - OS:
+      label: Environment
+      description: Include OS, versions, or browser only when relevant.
