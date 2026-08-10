@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lumo-a" x1="10" y1="8" x2="55" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.52" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+    <radialGradient id="lumo-b" cx="0" cy="0" r="1" gradientTransform="translate(25 21) rotate(49) scale(38)">
+      <stop stop-color="white" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#lumo-a)"/>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#lumo-b)"/>
+  <path d="M21 17V40.5C21 44.09 23.91 47 27.5 47H44" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="44.5" cy="20.5" r="4.5" fill="white"/>
+</svg>
