@@ -1,220 +1,249 @@
-# Contributing to DeepTutor
+# Contributing to Lumo
 
-Thank you for your interest in contributing to DeepTutor! We welcome developers of all skill levels to help build the next-generation intelligent learning companion.
+Thank you for helping build Lumo. Contributions are welcome from developers, learners, educators, designers, researchers, and documentation writers.
 
-<p align="center">
-<a href="https://discord.gg/eRsjPgMU4t"><img src="https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>&nbsp;
-<a href="https://github.com/HKUDS/DeepTutor/issues/78"><img src="https://img.shields.io/badge/WeChat-Join_Group-07C160?style=for-the-badge&logo=wechat&logoColor=white" alt="WeChat"></a>&nbsp;
-<a href="./Communication.md"><img src="https://img.shields.io/badge/Feishu-Join_Group-00D4AA?style=for-the-badge&logo=feishu&logoColor=white" alt="Feishu"></a>
-</p>
+This guide explains how to propose a change, prepare the project, validate your work, and submit a pull request. By participating, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
----
+## Ways to contribute
 
-## Table of Contents
+- Fix a reproducible bug.
+- Improve accessibility, performance, tests, or error handling.
+- Clarify documentation or add a tested example.
+- Improve a learning workflow or propose a first-party skill.
+- Add or improve model, retrieval, research, or agent integrations.
+- Refine the public Lumo demo without exposing private data or credentials.
+- Triage issues and help other contributors reproduce problems.
 
-- [Maintainers](#maintainers)
-- [Branching Strategy](#branching-strategy)
-- [Quick Start for Contributors](#quick-start-for-contributors)
-- [Development Setup](#development-setup)
-- [Code Quality & Security](#code-quality--security)
-- [Coding Standards](#coding-standards)
-- [Commit Message Format](#commit-message-format)
-- [Security Best Practices](#security-best-practices)
+If this is your first contribution, look for issues labeled `good first issue` or `help wanted`.
 
----
+## Before you start
 
-## Maintainer
+1. Search existing issues and pull requests to avoid duplicate work.
+2. For a small, obvious fix, you may open a pull request directly.
+3. For a feature, architecture change, new dependency, data migration, or large refactor, open an issue first.
+4. For a skill, use the **Lumo skill proposal** issue template before implementation.
+5. Report vulnerabilities privately according to [SECURITY.md](SECURITY.md). Do not open a public security issue.
 
-[@pancacake](https://github.com/pancacake) — Currently just me!
+Maintainers may close work that substantially changes the product direction without prior agreement. An issue discussion protects everyone’s time.
 
----
+## Understand the two application surfaces
 
-## Branching Strategy
+Lumo contains two related but distinct experiences:
 
-We use a multi-branch model to keep development organized:
+| Surface | Location | Purpose |
+| --- | --- | --- |
+| Full application | `deeptutor/`, `deeptutor_cli/`, `web/` | Local learning workspace, agent runtime, knowledge bases, research, books, memory, and skills |
+| Public demo | `lumo-site/` | Safe hosted product journey, ChatGPT sign-in, and one persistent learning workflow per user |
 
-| Branch | Purpose | Stability |
-|---|---|---|
-| `dev` | General development | May have bugs or breaking changes |
-| `multi-user` | Multi-user scenario development | Experimental, focused on multi-tenant features |
+A change to one surface does not automatically change the other. Pull requests should state which surface is affected.
 
-> [!IMPORTANT]
-> Please do **not** submit PRs directly to `main`. All contributions should target `dev` or `multi-user`.
+## Development setup
 
-### Which Branch Should I Target?
+### Requirements
 
-**Target `dev`** if your PR includes:
+- Git
+- Python 3.11, 3.12, or 3.13
+- Node.js 22+
 
-- New features or functionality
-- Refactoring that may affect existing behavior
-- Changes to APIs or configuration
-- General bug fixes
+### Fork and clone
 
-**Target `multi-user`** if your PR includes:
-
-- Multi-user / multi-tenant related features
-- Session isolation, user management, or permission changes
-- Collaborative or shared workspace functionality
-
-> [!NOTE]
-> When in doubt, target `dev` — it is the default development branch.
-
----
-
-## Quick Start for Contributors
-
-1. **Fork & Clone** the repository.
-2. **Sync** with the target branch before starting:
+Fork the repository, then clone your fork:
 
 ```bash
-git checkout dev && git pull origin dev
+git clone https://github.com/YOUR-USERNAME/Lumo.git
+cd Lumo
+git remote add upstream https://github.com/Bitshank-2338/Lumo.git
 ```
 
-3. **Create** your feature branch from the target branch:
+Create a focused branch from the latest `main`:
 
 ```bash
-git checkout -b feature/your-feature-name
+git checkout main
+git pull --ff-only upstream main
+git checkout -b feat/short-description
 ```
 
-4. **Develop** your changes, following the coding standards below.
-5. **Validate** by running pre-commit checks:
+Suggested prefixes are `feat/`, `fix/`, `docs/`, `test/`, `refactor/`, and `chore/`.
+
+### Python and full application
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment:
+
+```bash
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# macOS or Linux
+source .venv/bin/activate
+```
+
+Install contributor dependencies:
+
+```bash
+python -m pip install --upgrade pip
+pip install -e ".[dev]"
+pre-commit install
+```
+
+Install the full web workspace:
+
+```bash
+cd web
+npm ci --legacy-peer-deps
+cd ..
+```
+
+Start the full application with:
+
+```bash
+lumo start
+```
+
+### Public demo
+
+```bash
+cd lumo-site
+npm ci
+npm run dev
+```
+
+The hosted ChatGPT identity and D1 database bindings are platform-managed. Do not add fallback credentials or commit production identifiers to make local authentication work.
+
+## Repository areas
+
+| Path | Typical contributions |
+| --- | --- |
+| `deeptutor/` | Python services, capabilities, tools, knowledge, skills, APIs, and agent runtime |
+| `deeptutor_cli/` | CLI commands and startup behavior |
+| `web/` | Full Next.js product interface |
+| `lumo-site/` | Public product demo and persistent workflow |
+| `tests/` | Python behavior and regression tests |
+| `scripts/` | Safe maintenance and synchronization utilities |
+| `requirements/`, `pyproject.toml` | Dependency and packaging changes |
+
+## Coding expectations
+
+### General
+
+- Keep changes focused; do not mix unrelated cleanup into a feature or fix.
+- Preserve existing attribution and compatibility notices.
+- Add or update tests for behavior changes.
+- Update documentation when commands, configuration, or user behavior changes.
+- Prefer clear names and small, reviewable functions.
+- Do not commit generated build output, local data, uploaded documents, credentials, or secrets.
+- Avoid introducing a dependency when the standard library or an existing dependency is sufficient.
+
+### Python
+
+- Support the Python versions declared in `pyproject.toml`.
+- Add type hints to new public functions and meaningful docstrings to public modules, classes, and functions.
+- Follow the Ruff configuration in `pyproject.toml`.
+- Use safe subprocess and file-handling practices; never interpolate untrusted values into a shell command.
+
+### TypeScript and React
+
+- Keep components accessible by keyboard and assistive technology.
+- Preserve type safety; do not silence errors with broad `any` types without explanation.
+- Keep server-only secrets and persistence logic out of client bundles.
+- Add focused tests for navigation, identity boundaries, persistence, and error states.
+
+### Lumo skills
+
+- Start with a skill proposal issue describing the learner, problem, inputs, outputs, safety constraints, and example result.
+- A built-in skill must have a narrow learning purpose and clear instructions.
+- Do not include copied proprietary course content, private prompts, credentials, or unverifiable claims.
+- Document external services and licenses used by the skill.
+- Treat prompt and instruction changes as product behavior: test them and explain the expected outcome in the pull request.
+
+Community skill installation is still in progress. Acceptance into the repository does not imply immediate publication in a marketplace.
+
+## Run the relevant checks
+
+You do not need to run every expensive check for a documentation-only change, but you must run the checks relevant to your change and list them in the pull request.
+
+### Python
+
+```bash
+ruff check .
+ruff format --check .
+pytest -q tests deeptutor/learning/tests
+```
+
+### Full web workspace
+
+```bash
+cd web
+npm run lint
+npm run test:node
+```
+
+### Public demo
+
+```bash
+cd lumo-site
+npm run lint
+npm test
+```
+
+### Pre-commit
 
 ```bash
 pre-commit run --all-files
 ```
 
-6. **Submit** your Pull Request to the correct target branch (not `main` unless it's a hotfix or docs-only change).
+Do not bypass failing checks. If a failure is unrelated or environment-specific, describe it with the exact command and output in the pull request.
 
-> [!TIP]
-> Browse our [Issues](https://github.com/HKUDS/DeepTutor/issues) for tasks labeled `good first issue` to find a great starting point. Comment on the issue to let others know you're working on it.
+## Commit messages
 
----
+Use a short imperative summary. Conventional prefixes help organize history:
 
-## Development Setup
-
-<details>
-<summary><b>Setting Up Your Environment</b></summary>
-
-**Step 1: Create a virtual environment**
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+```text
+feat: add source comparison workflow
+fix: preserve workflow after redirect
+docs: explain local embedding setup
+test: cover unauthenticated workflow creation
+chore: update public demo dependencies
 ```
 
-**Step 2: Install dependencies**
+Keep commits logically grouped. Maintainers may squash commits when merging.
 
-```bash
-pip install -e ".[all]"
-```
+## Pull request structure
 
-</details>
+Every pull request should include:
 
-<details>
-<summary><b>Setting Up Pre-commit (First Time Only)</b></summary>
+- the problem and intended outcome;
+- a concise description of the solution;
+- the affected product surface and modules;
+- screenshots or a recording for visible interface changes;
+- tests run and their results;
+- security, privacy, data, dependency, and migration impact;
+- documentation changes; and
+- the related issue, using `Closes #123` when appropriate.
 
-**Step 1: Install pre-commit**
+Complete the repository pull-request template. Mark an item not applicable instead of deleting it.
 
-```bash
-pip install pre-commit
-# Or: conda install -c conda-forge pre-commit
-```
+## Review and merge process
 
-**Step 2: Install Git hooks**
+1. Automated checks must pass.
+2. A maintainer reviews correctness, scope, user impact, tests, security, and documentation.
+3. Feedback should be resolved or discussed; avoid force-pushing during an active review unless necessary.
+4. Maintainers may request changes, split an oversized pull request, or close work outside the roadmap.
+5. Approved work is normally squash-merged into `main`.
 
-```bash
-pre-commit install
-```
+The `main` branch is the contribution target and should remain releasable. Do not push directly to it unless you are a maintainer performing a documented release or emergency fix.
 
-**Step 3: Initialize the Secrets Baseline**
+## AI-assisted contributions
 
-If you encounter false-positive secrets (like API hash placeholders), update the baseline:
+AI tools are welcome as assistants, but the contributor remains responsible for every submitted line. Verify generated code, tests, licenses, citations, and security implications. In the pull request, disclose material AI assistance and describe how the result was validated.
 
-```bash
-detect-secrets scan > .secrets.baseline
-```
+## Licensing
 
-</details>
+By submitting a contribution, you agree that it may be distributed under the repository’s [Apache License 2.0](LICENSE). You must have the right to contribute the code, content, data, and assets you submit.
 
-### Common Commands
+## Getting help
 
-| Task | Command |
-|---|---|
-| Check all files | `pre-commit run --all-files` |
-| Check quietly | `pre-commit run --all-files -q` |
-| Update tools | `pre-commit autoupdate` |
-| Emergency skip | `git commit --no-verify -m "message"` *(not recommended)* |
----
-
-## Code Quality & Security
-
-We use automated tools (configured via `pyproject.toml` and `.pre-commit-config.yaml`) to maintain high standards:
-
-| Tool | Purpose |
-|---|---|
-| **Ruff** | Python linting and formatting |
-| **Prettier** | Frontend & config file formatting |
-| **detect-secrets** | Hardcoded secret scanning |
-| **pip-audit** | Dependency vulnerability scanning |
-| **Bandit** | Security issue analysis |
-| **MyPy** | Static type checking |
-| **Interrogate** | Docstring coverage reporting |
-
-> [!IMPORTANT]
-> Local pre-commit hooks may only show warnings, but **CI will perform strict checks** and automatically reject PRs that fail.
-
----
-
-## Coding Standards
-
-### Python
-
-- Use **type hints** for all function signatures.
-- Prefer **f-strings** for string formatting.
-- Follow **PEP 8** (enforced by Ruff).
-- Keep functions **small and focused** on a single responsibility.
-
-### Documentation
-
-- Every new module, class, and public function should have a **docstring** (Google Python Style Guide format).
-- Update `README.md` if your change introduces new features or configuration.
-
----
-
-## Commit Message Format
-
-```
-<type>: <short description>
-
-[optional body]
-```
-
-| Type | Description |
-|---|---|
-| `feat` | A new feature (MINOR version bump) |
-| `fix` | A bug fix (PATCH version bump) |
-| `docs` | Documentation only changes |
-| `style` | Formatting, no logic changes |
-| `refactor` | Code restructuring, no new features or fixes |
-| `test` | Adding or correcting tests |
-| `chore` | Build process, tooling, or dependency updates |
-
----
-
-## Security Best Practices
-
-### File Uploads
-
-- **Size Limits**: General files capped at 100 MB; PDFs capped at 50 MB.
-- **Validation**: Multi-layer validation (extension + MIME type + content sanitization).
-- **Sanitization**: All filenames are sanitized to prevent path traversal.
-
-### Development Standards
-
-- **Subprocesses**: Always use `shell=False` to prevent command injection.
-- **Pathing**: Use `pathlib.Path` for cross-platform compatibility.
-- **Line Endings**: LF (Unix) line endings enforced for critical scripts via `.gitattributes`.
-
----
-
-Questions? Reach out on [Discord](https://discord.gg/eRsjPgMU4t). Let's build the future of AI tutoring together!
+Read [SUPPORT.md](SUPPORT.md) or open a question using the repository’s question template. Thank you for helping make learning more connected, grounded, and useful.

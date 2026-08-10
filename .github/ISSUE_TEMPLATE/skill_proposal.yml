@@ -1,0 +1,76 @@
+name: Lumo skill proposal
+description: Propose a focused first-party or future community learning skill
+title: "[Skill]: "
+labels: ["enhancement", "skill"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Lumo Hub community publishing is still in progress. Use this form to propose a skill before implementation. Acceptance into the repository does not guarantee immediate marketplace publication.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing skills and issues for the same learning workflow.
+          required: true
+        - label: I have the right to contribute all instructions, examples, data, and assets in this proposal.
+          required: true
+        - label: The skill will not contain credentials, private data, proprietary course content, or hidden tracking.
+          required: true
+  - type: input
+    id: name
+    attributes:
+      label: Proposed skill name
+      placeholder: Evidence Comparison Coach
+    validations:
+      required: true
+  - type: textarea
+    id: learner
+    attributes:
+      label: Target learner and problem
+      description: Who is it for, and what specific learning problem does it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow
+      description: Describe the steps the skill guides the learner through.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs
+      description: What information, documents, tools, or permissions does it need?
+    validations:
+      required: true
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs and example result
+      description: What will it produce, and how will a learner judge the result?
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety, privacy, and limitations
+      description: Describe risky inputs, external actions, data handling, and cases where the skill should stop or ask the learner.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: External services, content, and licenses
+      description: List dependencies, APIs, datasets, assets, and their licenses, or write None.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: Explain the examples or tests that will demonstrate useful and safe behavior.
+    validations:
+      required: true

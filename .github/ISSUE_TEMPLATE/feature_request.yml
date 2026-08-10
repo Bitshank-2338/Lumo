@@ -1,52 +1,63 @@
-name: Feature Request
-description: File a feature request
+name: Feature request
+description: Propose an improvement to Lumo
+title: "[Feature]: "
 labels: ["enhancement"]
-title: "[Feature Request]:"
-
 body:
   - type: checkboxes
-    id: existingcheck
+    id: checks
     attributes:
-      label: Do you need to file a feature request?
-      description: Please help us manage our time by avoiding duplicates and common feature request with the steps below.
+      label: Before submitting
       options:
-        - label: I have searched the existing feature request and this feature request is not already filed.
-        - label: I believe this is a legitimate feature request, not just a question or bug.
-  - type: textarea
-    id: feature_request_description
-    attributes:
-      label: Feature Request Description
-      description: A clear and concise description of the feature request you would like.
-      placeholder: What does this feature request add or improve?
+        - label: I searched existing issues and did not find this proposal.
+          required: true
+        - label: I am describing a user problem, not only a preferred implementation.
+          required: true
   - type: dropdown
-    id: module
+    id: surface
     attributes:
-      label: Related Module
-      description: Which module would this feature affect?
+      label: Product surface
       options:
-        - Dashboard
-        - Knowledge Base Management
-        - Smart Solver
-        - Question Generator
-        - Deep Research
-        - Co-Writer
-        - Notebook
-        - Guided Learning
-        - Idea Generation
-        - API/Backend
-        - Frontend/Web
+        - Full local Lumo application
+        - Public Lumo website or authenticated demo
+        - Knowledge and retrieval
+        - Research or tutoring
+        - Books, notes, or creation
+        - Agents or model providers
+        - CLI, installation, or developer tooling
         - Other
     validations:
       required: true
   - type: textarea
-    id: use_case
+    id: problem
     attributes:
-      label: Use Case
-      description: Describe the problem this feature would solve or the use case it would enable.
-      placeholder: What problem does this feature solve?
+      label: Learner or contributor problem
+      description: Who has this problem, and what are they unable to do today?
+    validations:
+      required: true
   - type: textarea
-    id: additional_context
+    id: outcome
     attributes:
-      label: Additional Context
-      description: Add any other context or screenshots about the feature request here.
-      placeholder: Any additional information, mockups, or examples
+      label: Desired outcome
+      description: Describe the result and how success could be evaluated.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Optional implementation, interaction, API, or design ideas.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing workarounds or other approaches you considered.
+  - type: textarea
+    id: risks
+    attributes:
+      label: Security, privacy, and compatibility considerations
+      description: Describe new data, permissions, dependencies, migrations, or breaking changes.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add mockups, examples, research, or related issues.

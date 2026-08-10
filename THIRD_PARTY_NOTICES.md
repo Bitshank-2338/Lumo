@@ -1,5 +1,15 @@
 # Third-party notices
 
+## DeepTutor
+
+- Project: [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor)
+- License: Apache License 2.0
+- Relationship: Lumo is an independent custom build based on DeepTutor.
+- Citation: See the DeepTutor reference preserved in `CITATION.cff`.
+
+Original copyright and license notices are retained in the repository. Lumo is
+not presented as an official HKUDS release.
+
 ## CSSwitch
 
 - Project: [SuperJJ007/CSSwitch](https://github.com/SuperJJ007/CSSwitch)
@@ -8,10 +18,10 @@
 - Copyright: Copyright (c) 2026 shanjunjie
 - Adapted concepts: PKCE loopback login, auth generations, atomic credential updates, model-catalog cache invalidation, and redacted operation states.
 
-DeepTutor's Codex OAuth support draws on the design concepts listed above and
-implements them independently against DeepTutor's own settings directory, model
-catalog, and provider lifecycle. The MIT license text from that source commit
-follows:
+The inherited DeepTutor Codex OAuth support draws on the design concepts listed
+above and implements them independently against its own settings directory,
+model catalog, and provider lifecycle. The MIT license text from that source
+commit follows:
 
 ```text
 MIT License

@@ -1,4 +1,10 @@
-# DeepTutor — Agent-Native Architecture
+# Lumo contributor architecture
+
+> Lumo is an independent custom build based on DeepTutor. Internal `deeptutor`
+> package names and some architecture terminology are retained for upstream
+> compatibility. New user-facing work should use the Lumo name.
+
+## Inherited DeepTutor architecture
 
 ## Overview
 

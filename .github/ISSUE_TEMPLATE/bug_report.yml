@@ -1,88 +1,81 @@
-name: Bug Report
-description: File a bug report
-title: "[Bug]:"
-labels: ["bug", "triage"]
-
+name: Bug report
+description: Report a reproducible problem in Lumo
+title: "[Bug]: "
+labels: ["bug"]
 body:
   - type: checkboxes
-    id: existingcheck
+    id: checks
     attributes:
-      label: Do you need to file an issue?
-      description: Please help us manage our time by avoiding duplicates and common bugs with the steps below.
+      label: Before submitting
       options:
-        - label: I have searched the existing issues and this bug is not already filed.
-        - label: I believe this is a legitimate bug, not just a question or feature request.
-  - type: textarea
-    id: description
-    attributes:
-      label: Describe the bug
-      description: A clear and concise description of what the bug is.
-      placeholder: What went wrong?
-  - type: textarea
-    id: reproduce
-    attributes:
-      label: Steps to reproduce
-      description: Steps to reproduce the behavior.
-      placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
-  - type: textarea
-    id: expected_behavior
-    attributes:
-      label: Expected Behavior
-      description: A clear and concise description of what you expected to happen.
-      placeholder: What should have happened?
+        - label: I searched existing issues and did not find this problem.
+          required: true
+        - label: I removed secrets, tokens, personal documents, and private data from this report.
+          required: true
+        - label: This is a reproducible bug, not a support request or feature proposal.
+          required: true
   - type: dropdown
-    id: module
+    id: surface
     attributes:
-      label: Related Module
-      description: Which module is this bug related to?
+      label: Product surface
+      description: Where did the problem occur?
       options:
-        - Dashboard
-        - Knowledge Base Management
-        - Smart Solver
-        - Question Generator
-        - Deep Research
-        - Co-Writer
-        - Notebook
-        - Guided Learning
-        - Idea Generation
-        - API/Backend
-        - Frontend/Web
+        - Full local Lumo application
+        - Public Lumo website or authenticated demo
+        - Lumo skill
+        - CLI or startup
+        - Installation or build
         - Other
     validations:
       required: true
   - type: textarea
-    id: configused
+    id: summary
     attributes:
-      label: Configuration Used
-      description: The DeepTutor configuration used (if applicable).
+      label: Problem
+      description: Clearly describe what went wrong.
+      placeholder: What did you see?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reliable sequence that triggers the problem.
       placeholder: |
-        # Paste your config here or describe the settings
+        1. Start Lumo with ...
+        2. Open ...
+        3. Select ...
+        4. Observe ...
+    validations:
+      required: true
   - type: textarea
-    id: screenshotslogs
+    id: expected
     attributes:
-      label: Logs and screenshots
-      description: If applicable, add screenshots and logs to help explain your problem.
-      placeholder: Add logs and screenshots here
+      label: Expected behavior
+      placeholder: What should have happened?
+    validations:
+      required: true
   - type: textarea
-    id: additional_information
+    id: environment
     attributes:
-      label: Additional Information
-      description: |
-        - DeepTutor Version: e.g., v0.5.0
-        - Operating System: e.g., macOS 14.0, Windows 11, Ubuntu 22.04
-        - Python Version: e.g., 3.11.0
-        - Node.js Version: e.g., 18.17.0
-        - Browser (if applicable): e.g., Chrome 120, Firefox 121
-        - Related Issues: e.g., #1
-        - Any other relevant information.
+      label: Environment
       value: |
-        - DeepTutor Version:
-        - Operating System:
-        - Python Version:
-        - Node.js Version:
-        - Browser (if applicable):
-        - Related Issues:
+        - Lumo commit or version:
+        - Operating system:
+        - Python version:
+        - Node.js version:
+        - Browser:
+        - Installation method:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs and screenshots
+      description: Paste relevant output or drag in screenshots. Remove credentials and private data.
+      render: shell
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include frequency, workarounds, regression information, or related issues.

@@ -1,38 +1,30 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-title: "DeepTutor: Towards Agentic Personalized Tutoring"
+message: "If you use Lumo, please cite this repository and the upstream DeepTutor work."
+title: "Lumo: An Agent-Native Learning Workspace"
+type: software
 authors:
-  - family-names: "Zhao"
-    given-names: "Bingxi"
-  - family-names: "Zhang"
-    given-names: "Jiahao"
-  - family-names: "Ren"
-    given-names: "Xubin"
-  - family-names: "Guo"
-    given-names: "Zirui"
-  - family-names: "Chu"
-    given-names: "Tianzhe"
-  - family-names: "Ma"
-    given-names: "Yi"
-  - family-names: "Huang"
-    given-names: "Chao"
-preferred-citation:
-  type: article
-  title: "DeepTutor: Towards Agentic Personalized Tutoring"
-  authors:
-    - family-names: "Zhao"
-      given-names: "Bingxi"
-    - family-names: "Zhang"
-      given-names: "Jiahao"
-    - family-names: "Ren"
-      given-names: "Xubin"
-    - family-names: "Guo"
-      given-names: "Zirui"
-    - family-names: "Chu"
-      given-names: "Tianzhe"
-    - family-names: "Ma"
-      given-names: "Yi"
-    - family-names: "Huang"
-      given-names: "Chao"
-  journal: "arXiv preprint arXiv:2604.26962"
-  year: 2026
+  - family-names: "Bitshank-2338"
+repository-code: "https://github.com/Bitshank-2338/Lumo"
+url: "https://lumo-ai-learning-hub.shanky2338.chatgpt.site"
+license: "Apache-2.0"
+date-released: 2026-08-10
+references:
+  - type: article
+    title: "DeepTutor: Towards Agentic Personalized Tutoring"
+    authors:
+      - family-names: "Zhao"
+        given-names: "Bingxi"
+      - family-names: "Zhang"
+        given-names: "Jiahao"
+      - family-names: "Ren"
+        given-names: "Xubin"
+      - family-names: "Guo"
+        given-names: "Zirui"
+      - family-names: "Chu"
+        given-names: "Tianzhe"
+      - family-names: "Ma"
+        given-names: "Yi"
+      - family-names: "Huang"
+        given-names: "Chao"
+    journal: "arXiv preprint arXiv:2604.26962"
+    year: 2026
