@@ -36,6 +36,7 @@ const modes = {
 } as const;
 
 type Mode = keyof typeof modes;
+const WORKFLOW_MEMBER_PATH = "/member?view=workflow";
 
 type LumoDemoProps = {
   authUser: { displayName: string } | null;
@@ -62,7 +63,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
       return;
     }
     if (savedWorkflow) {
-      window.location.assign("/member");
+      window.location.assign(WORKFLOW_MEMBER_PATH);
       return;
     }
 
@@ -87,7 +88,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
       setGoal(payload.workflow.goal);
       setComplete(true);
       setWorkflowNotice(payload.alreadyExists ? "Your existing workflow is ready." : "Workflow saved to your private Lumo space.");
-      window.location.assign("/member");
+      window.location.assign(WORKFLOW_MEMBER_PATH);
     } catch (error) {
       setWorkflowNotice(error instanceof Error ? error.message : "The workflow could not be saved.");
     } finally {
@@ -116,7 +117,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
         <div className="nav-actions">
           {authUser ? (
             <>
-              <a className="auth-account" href="/member" title={authUser.displayName}>
+              <a className="auth-account" href={WORKFLOW_MEMBER_PATH} title={authUser.displayName}>
                 <span>{authUser.displayName.slice(0, 1).toUpperCase()}</span>
                 <strong>{authUser.displayName}</strong>
               </a>
@@ -143,7 +144,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
           <div className="hero-actions">
             <a className="primary-button" href="#demo">Try the live workflow <span>→</span></a>
             {authUser ? (
-              <a className="text-button" href="/member">Open my Lumo space</a>
+              <a className="text-button" href={WORKFLOW_MEMBER_PATH}>Open my Lumo space</a>
             ) : (
               <a className="text-button" href={signInHref}>Unlock your Lumo space</a>
             )}
@@ -234,7 +235,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
             <ol>{displayedSteps.map((step, index) => <li key={step}><span>{complete ? "✓" : index + 1}</span>{step}</li>)}</ol>
             <p className="result-output"><strong>Output</strong>{displayedOutput}</p>
             {workflowNotice ? <p className="workflow-notice">{workflowNotice}</p> : null}
-            {savedWorkflow ? <a className="saved-workflow-link" href="/member">Open lesson, concept map, questions, and plan →</a> : null}
+            {savedWorkflow ? <a className="saved-workflow-link" href={WORKFLOW_MEMBER_PATH}>Open lesson, concept map, questions, and plan →</a> : null}
           </div>
         </div>
       </section>

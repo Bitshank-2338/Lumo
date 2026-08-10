@@ -26,7 +26,7 @@ export default async function Home() {
     <LumoDemo
       authUser={user ? { displayName: user.displayName } : null}
       initialWorkflow={workflow}
-      signInHref={chatGPTSignInPath("/member")}
+      signInHref={chatGPTSignInPath("/member?view=workflow")}
       signOutHref={chatGPTSignOutPath("/")}
     />
   );

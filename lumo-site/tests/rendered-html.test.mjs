@@ -25,7 +25,7 @@ test("server-renders the Lumo public demo", async () => {
 test("protects the member space with ChatGPT sign-in", async () => {
   const response = await render("/member");
   assert.ok([302, 307, 308].includes(response.status));
-  assert.match(response.headers.get("location") ?? "", /^\/signin-with-chatgpt\?return_to=%2Fmember$/);
+  assert.match(response.headers.get("location") ?? "", /^\/signin-with-chatgpt\?return_to=%2Fmember%3Fview%3Dworkflow$/);
 });
 
 test("requires a ChatGPT identity before creating a workflow", async () => {

@@ -8,7 +8,7 @@ export default function MemberPage() {
 }
 
 async function AuthenticatedMemberSpace() {
-  const user = await requireChatGPTUser("/member");
+  const user = await requireChatGPTUser("/member?view=workflow");
   const { getUserWorkflow } = await import("../../db/workflows");
   const workflow = await getUserWorkflow(user.userId);
   const firstName = user.fullName?.split(/\s+/)[0] || user.displayName.split("@")[0];
