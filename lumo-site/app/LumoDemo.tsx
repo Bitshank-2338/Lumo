@@ -87,6 +87,7 @@ export function LumoDemo({ authUser, initialWorkflow, signInHref, signOutHref }:
       setGoal(payload.workflow.goal);
       setComplete(true);
       setWorkflowNotice(payload.alreadyExists ? "Your existing workflow is ready." : "Workflow saved to your private Lumo space.");
+      window.location.assign("/member");
     } catch (error) {
       setWorkflowNotice(error instanceof Error ? error.message : "The workflow could not be saved.");
     } finally {

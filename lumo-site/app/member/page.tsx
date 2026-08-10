@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+/* eslint-disable @next/next/no-html-link-for-pages -- vinext Link prefetch fails on this authenticated route. */
 import { chatGPTSignOutPath, requireChatGPTUser } from "../chatgpt-auth";
 
 export const dynamic = "force-dynamic";
@@ -20,10 +19,10 @@ async function AuthenticatedMemberSpace() {
   return (
     <main className="member-shell">
       <header className="member-nav">
-        <Link className="brand" href="/" aria-label="Lumo home">
+        <a className="brand" href="/" aria-label="Lumo home">
           <span className="brand-mark">L</span>
           <span>Lumo</span>
-        </Link>
+        </a>
         <div className="member-user">
           <span>{user.displayName.slice(0, 1).toUpperCase()}</span>
           <div><strong>{user.displayName}</strong><small>ChatGPT verified</small></div>
@@ -73,9 +72,8 @@ async function AuthenticatedMemberSpace() {
             <div className="artifact-grid">
               <section className="artifact-card lesson-artifact">
                 <small>01 · STRUCTURED LESSON</small>
-                <h3>{workflow.details.lesson.heading}</h3>
-                <p>{workflow.details.lesson.summary}</p>
-                <ul>{workflow.details.lesson.keyPoints.map((point) => <li key={point}>{point}</li>)}</ul>
+                <h3>Your focused first lesson</h3>
+                <p>{workflow.details.lesson}</p>
               </section>
 
               <section className="artifact-card">
@@ -95,7 +93,7 @@ async function AuthenticatedMemberSpace() {
                 <small>03 · RECALL CHECK</small>
                 <h3>Five questions</h3>
                 <ol className="question-list">
-                  {workflow.details.recallQuestions.map((question) => <li key={question}>{question}</li>)}
+                  {workflow.details.questions.map((question) => <li key={question}>{question}</li>)}
                 </ol>
               </section>
 
@@ -103,7 +101,7 @@ async function AuthenticatedMemberSpace() {
                 <small>04 · SEVEN-DAY PLAN</small>
                 <h3>Turn insight into progress</h3>
                 <ol className="plan-list">
-                  {workflow.details.sevenDayPlan.map((item, index) => (
+                  {workflow.details.plan.map((item, index) => (
                     <li key={item}><span>DAY {index + 1}</span>{item}</li>
                   ))}
                 </ol>
@@ -127,7 +125,7 @@ async function AuthenticatedMemberSpace() {
                 <strong>Your workspace is ready</strong>
                 <p>Choose a mode and goal. Lumo will save a lesson, concept map, five recall questions, and a seven-day plan here.</p>
               </div>
-              <Link href="/#demo">Build my workflow →</Link>
+              <a href="/#demo">Build my workflow →</a>
             </div>
           </>
         )}
